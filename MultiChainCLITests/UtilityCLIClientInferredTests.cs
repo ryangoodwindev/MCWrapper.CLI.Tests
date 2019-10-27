@@ -1,0 +1,128 @@
+﻿using MCWrapper.CLI.Connection;
+using MCWrapper.CLI.Ledger.Clients;
+using MCWrapper.CLI.Tests.ServiceHelpers;
+using MCWrapper.Data.Models.Utility;
+using MCWrapper.Ledger.Entities;
+using MCWrapper.Ledger.Entities.Extensions;
+using NUnit.Framework;
+using System.Threading.Tasks;
+
+namespace MCWrapper.CLI.Tests.MultiChainCLITests
+{
+    [TestFixture]
+    public class UtilityCLIClientInferredTests
+    {
+        // multichain-cli.exe client supports the 'utility' based methods
+        private readonly WalletCliClient Wallet;
+        private readonly UtilityCliClient Utility;
+
+        public UtilityCLIClientInferredTests()
+        {
+            var provider = new ServiceHelperParameterlessConstructor();
+
+            Wallet = provider.GetService<WalletCliClient>();
+            Utility = provider.GetService<UtilityCliClient>();
+        }
+
+        [Test]
+        public async Task CreateAppendToAndDeleteBinaryCacheAsyncTest()
+        {
+            // Act - Create a new binary cache, append some Hex data to the new cache, then delete the binary cache
+            // returns new binary cache identifier
+            var cache = await Utility.CreateBinaryCacheAsync();
+
+            // Act - Append some string data converted to hex
+            // Discard
+            _ = await Utility.AppendBinaryCacheAsync(cache.Result, "Some data to append to the binary cache".ToHex());
+
+            // Act - Append an object that is serialized to JSON and then converted to a hex string representation
+            // returns byte size int
+            var append = await Utility.AppendBinaryCacheAsync(cache.Result, new AssetEntity().ObjectToHex());
+
+            // Act - Delete the new binary cache
+            var delete = await Utility.DeleteBinaryCacheAsync(cache.Result);
+
+            // Assert
+            Assert.IsEmpty(cache.Error);
+            Assert.IsInstanceOf<CliResponse<string>>(cache);
+
+            // Assert
+            Assert.IsEmpty(append.Error);
+            Assert.IsInstanceOf<CliResponse<int>>(append);
+
+            // Assert
+            Assert.IsEmpty(delete.Error);
+            Assert.IsInstanceOf<CliResponse<object>>(delete);
+        }
+
+        [Test]
+        public async Task CreateKeyPairsAsyncTest()
+        {
+            // Act - fetch 4 key pairs
+            var keyPairs = await Utility.CreateKeyPairsAsync(4);
+
+            // Assert
+            Assert.IsEmpty(keyPairs.Error);
+            Assert.IsInstanceOf<CliResponse<CreateKeyPairsResult[]>>(keyPairs);
+        }
+
+        [Test]
+        public async Task CreateMultiSigAsyncTest()
+        {
+            // Act - fetch a new multi sig address
+            var multiSig = await Utility.CreateMultiSigAsync(1, new[] { Utility.CliOptions.ChainAdminAddress });
+
+            // Assert
+            Assert.IsEmpty(multiSig.Error);
+            Assert.IsInstanceOf<CliResponse<CreateMultiSigResult>>(multiSig);
+        }
+
+        [Test]
+        public async Task EstimateFeeAsyncTest()
+        {
+            // Act - fetch fee
+            var fee = await Utility.EstimateFeeAsync(300);
+
+            // Assert
+            Assert.IsEmpty(fee.Error);
+            Assert.IsInstanceOf<CliResponse<object>>(fee);
+        }
+
+        [Test]
+        public async Task EstimatePriorityAsyncTest()
+        {
+            // Act - fetch priority
+            var priority = await Utility.EstimatePriorityAsync(300);
+
+            // Assert
+            Assert.IsEmpty(priority.Error);
+            Assert.IsInstanceOf<CliResponse<object>>(priority);
+        }
+
+        [Test]
+        public async Task ValidateAddressAsyncTest()
+        {
+            // Act - validate blockchain address
+            var validate = await Utility.ValidateAddressAsync(Utility.CliOptions.ChainAdminAddress);
+
+            // Assert
+            Assert.IsEmpty(validate.Error);
+            Assert.IsInstanceOf<CliResponse<ValidateAddressResult>>(validate);
+        }
+
+        [Test]
+        public async Task VerifyMessageAsyncTest()
+        {
+            // Stage - sign blockchain message
+            var message = "Test for signing a message on the blockchain network";
+            var signature = await Wallet.SignMessageAsync(Wallet.CliOptions.ChainAdminAddress, message);
+
+            // Act - verify blockchain message
+            var verifyMessage = await Utility.VerifyMessageAsync(Utility.CliOptions.ChainAdminAddress, signature.Result, message);
+
+            // Assert
+            Assert.IsEmpty(verifyMessage.Error);
+            Assert.IsInstanceOf<CliResponse<bool>>(verifyMessage);
+        }
+    }
+}
