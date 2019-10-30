@@ -1,4 +1,4 @@
-﻿using MCWrapper.CLI.Ledger.Forge;
+﻿using MCWrapper.CLI.Ledger.Clients;
 using MCWrapper.CLI.Tests.ServiceHelpers;
 using NUnit.Framework;
 using System;
@@ -23,7 +23,7 @@ namespace MCWrapper.CLI.Tests.MachineShopTests
         {
             var createBlockchain = await Blacksmith.CreateBlockchainAsync(Guid.NewGuid().ToString("N"));
 
-            Assert.IsInstanceOf<ForgeClient>(createBlockchain);
+            Assert.IsInstanceOf<ForgeResponse>(createBlockchain);
         }
     }
 }

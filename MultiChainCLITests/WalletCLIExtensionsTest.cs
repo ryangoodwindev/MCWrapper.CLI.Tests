@@ -4,7 +4,6 @@ using MCWrapper.CLI.Tests.Options;
 using MCWrapper.CLI.Tests.ServiceHelpers;
 using MCWrapper.Ledger.Entities;
 using MCWrapper.Ledger.Entities.Extensions;
-using MCWrapper.CLI.Ledger.Clients.Wallet;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
