@@ -10,13 +10,13 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class GenerateCLIClientInferredTests
     {
         // multichain-cli.exe client supports the 'generate' based methods
-        private readonly GenerateCliClient Generate;
+        private readonly IMultiChainCliGenerate Generate;
 
         public GenerateCLIClientInferredTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Generate = provider.GetService<GenerateCliClient>();
+            Generate = provider.GetService<IMultiChainCliGenerate>();
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsEmpty(getGenerate.Error);
             Assert.IsInstanceOf<bool>(getGenerate.Result);
             Assert.IsInstanceOf<CliResponse<bool>>(getGenerate);
-            Assert.IsInstanceOf<CLIClientRequestObject>(getGenerate.Request);
+            Assert.IsInstanceOf<CLIRequest>(getGenerate.Request);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsEmpty(hashes.Error);
             Assert.IsInstanceOf<int>(hashes.Result);
             Assert.IsInstanceOf<CliResponse<int>>(hashes);
-            Assert.IsInstanceOf<CLIClientRequestObject>(hashes.Request);
+            Assert.IsInstanceOf<CLIRequest>(hashes.Request);
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsEmpty(setGenerate.Error);
             Assert.IsNull(setGenerate.Result);
             Assert.IsInstanceOf<CliResponse<object>>(setGenerate);
-            Assert.IsInstanceOf<CLIClientRequestObject>(setGenerate.Request);
+            Assert.IsInstanceOf<CLIRequest>(setGenerate.Request);
         }
     }
 }

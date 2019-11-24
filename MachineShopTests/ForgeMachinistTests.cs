@@ -9,13 +9,13 @@ namespace MCWrapper.CLI.Tests.MachineShopTests
     [TestFixture]
     public class ForgeMachinistTests
     {
-        private readonly ForgeClient Blocksmith;
+        private readonly IMultiChainCliForge Blocksmith;
 
         public ForgeMachinistTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Blocksmith = provider.GetService<ForgeClient>();
+            Blocksmith = provider.GetService<IMultiChainCliForge>();
         }
 
         [Test]

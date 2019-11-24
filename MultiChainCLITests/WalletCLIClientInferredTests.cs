@@ -18,9 +18,9 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class WalletCLIClientInferredTests
     {
         // multichain-cli.exe client supports the 'offchain' based methods
-        private readonly WalletCliClient Wallet;
-        private readonly UtilityCliClient Utility;
-        private readonly BlockchainCliClient Blockchain;
+        private readonly IMultiChainCliWallet Wallet;
+        private readonly IMultiChainCliUtility Utility;
+        private readonly IMultiChainCliGeneral Blockchain;
 
         private readonly CliOptions Options;
 
@@ -30,9 +30,9 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Wallet = provider.GetService<WalletCliClient>();
-            Utility = provider.GetService<UtilityCliClient>();
-            Blockchain = provider.GetService<BlockchainCliClient>();
+            Wallet = provider.GetService<IMultiChainCliWallet>();
+            Utility = provider.GetService<IMultiChainCliUtility>();
+            Blockchain = provider.GetService<IMultiChainCliGeneral>();
 
             Options = Blockchain.CliOptions;
             Node = Options.ChainAdminAddress;

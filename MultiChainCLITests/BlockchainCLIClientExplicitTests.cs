@@ -16,15 +16,15 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     [TestFixture]
     public class BlockchainCLIClientExplicitTests
     {
-        private readonly WalletCliClient Wallet;
-        private readonly BlockchainCliClient Blockchain;
+        private readonly IMultiChainCliWallet Wallet;
+        private readonly IMultiChainCliGeneral Blockchain;
 
         public BlockchainCLIClientExplicitTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Wallet = provider.GetService<WalletCliClient>();
-            Blockchain = provider.GetService<BlockchainCliClient>();
+            Wallet = provider.GetService<IMultiChainCliWallet>();
+            Blockchain = provider.GetService<IMultiChainCliGeneral>();
         }
 
         [Test]

@@ -16,15 +16,15 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class RawCLIClientExplicitTests
     {
         // multichain-cli.exe client supports the 'raw' based methods
-        private readonly RawCliClient Raw;
-        private readonly WalletCliClient Wallet;
+        private readonly IMultiChainCliRaw Raw;
+        private readonly IMultiChainCliWallet Wallet;
 
         public RawCLIClientExplicitTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Raw = provider.GetService<RawCliClient>();
-            Wallet = provider.GetService<WalletCliClient>();
+            Raw = provider.GetService<IMultiChainCliRaw>();
+            Wallet = provider.GetService<IMultiChainCliWallet>();
         }
 
         [Test]

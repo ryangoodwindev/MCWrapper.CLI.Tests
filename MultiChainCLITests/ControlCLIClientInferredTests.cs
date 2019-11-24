@@ -13,13 +13,13 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class ControlCLIClientInferredTests
     {
         // multichain-cli.exe client supports the 'offchain' based methods
-        private readonly ControlCliClient Control;
+        private readonly IMultiChainCliControl Control;
 
         public ControlCLIClientInferredTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Control = provider.GetService<ControlCliClient>();
+            Control = provider.GetService<IMultiChainCliControl>();
         }
 
         [Test, Ignore("ClearMemPoolTests should be ran independent of other tests since the network must be paused for incoming and mining tasks")]

@@ -10,13 +10,13 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class MineCLIClientExplicitTests
     {
         // multichain-cli.exe client supports the 'mine' based methods
-        private readonly MiningCliClient Mining;
+        private readonly IMultiChainCliMining Mining;
 
         public MineCLIClientExplicitTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Mining = provider.GetService<MiningCliClient>();
+            Mining = provider.GetService<IMultiChainCliMining>();
         }
 
         [Test, Ignore("Not supported by MultiChain v2.02")]

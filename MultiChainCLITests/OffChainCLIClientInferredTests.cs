@@ -9,13 +9,13 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class OffChainCLIClientInferredTests
     {
         // multichain-cli.exe client supports the 'offchain' based methods
-        private readonly OffChainCliClient OffChain;
+        private readonly IMultiChainCliOffChain OffChain;
 
         public OffChainCLIClientInferredTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            OffChain = provider.GetService<OffChainCliClient>();
+            OffChain = provider.GetService<IMultiChainCliOffChain>();
         }
 
         [Test, Ignore("Ignored until I can test with enterprise edition")]

@@ -13,15 +13,15 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class UtilityCLIClientInferredTests
     {
         // multichain-cli.exe client supports the 'utility' based methods
-        private readonly WalletCliClient Wallet;
-        private readonly UtilityCliClient Utility;
+        private readonly IMultiChainCliWallet Wallet;
+        private readonly IMultiChainCliUtility Utility;
 
         public UtilityCLIClientInferredTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Wallet = provider.GetService<WalletCliClient>();
-            Utility = provider.GetService<UtilityCliClient>();
+            Wallet = provider.GetService<IMultiChainCliWallet>();
+            Utility = provider.GetService<IMultiChainCliUtility>();
         }
 
         [Test]

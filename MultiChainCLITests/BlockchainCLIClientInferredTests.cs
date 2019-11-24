@@ -16,16 +16,15 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     [TestFixture]
     public class BlockchainCLIClientInferredTests
     {
-        // multichain-cli.exe client supports the 'offchain' based methods
-        private readonly WalletCliClient Wallet;
-        private readonly BlockchainCliClient Blockchain;
+        private readonly IMultiChainCliWallet Wallet;
+        private readonly IMultiChainCliGeneral Blockchain;
 
         public BlockchainCLIClientInferredTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Wallet = provider.GetService<WalletCliClient>();
-            Blockchain = provider.GetService<BlockchainCliClient>();
+            Wallet = provider.GetService<IMultiChainCliWallet>();
+            Blockchain = provider.GetService<IMultiChainCliGeneral>();
         }
 
         [Test]

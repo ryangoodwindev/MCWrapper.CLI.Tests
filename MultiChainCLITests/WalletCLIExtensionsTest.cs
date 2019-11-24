@@ -13,16 +13,16 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     [TestFixture]
     public class WalletCLIExtensionsTests
     {
-        private readonly WalletCliClient Wallet;
-        private readonly UtilityCliClient Utility;
+        private readonly IMultiChainCliWallet Wallet;
+        private readonly IMultiChainCliUtility Utility;
 
         public WalletCLIExtensionsTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
             // fetch services from provider
-            Wallet = provider.GetService<WalletCliClient>();
-            Utility = provider.GetService<UtilityCliClient>();
+            Wallet = provider.GetService<IMultiChainCliWallet>();
+            Utility = provider.GetService<IMultiChainCliUtility>();
         }
 
 

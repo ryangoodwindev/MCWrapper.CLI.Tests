@@ -12,13 +12,13 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class NetworkCLIClientInferredTests
     {
         // multichain-cli.exe client supports the 'offchain' based methods
-        private readonly NetworkCliClient Network;
+        private readonly IMultiChainCliNetwork Network;
 
         public NetworkCLIClientInferredTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Network = provider.GetService<NetworkCliClient>();
+            Network = provider.GetService<IMultiChainCliNetwork>();
         }
 
         [Test, Ignore("AddNode test is ignored since I don't care about peers right now")]
