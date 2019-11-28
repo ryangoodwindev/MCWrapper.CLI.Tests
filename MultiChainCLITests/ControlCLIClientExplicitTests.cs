@@ -13,29 +13,29 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
     public class ControlCLIClientExplicitTests
     {
         // multichain-cli.exe client supports the 'offchain' based methods
-        private readonly IMultiChainCliControl Control;
+        private readonly IMultiChainCliControl _control;
 
         public ControlCLIClientExplicitTests()
         {
             var provider = new ServiceHelperParameterlessConstructor();
 
-            Control = provider.GetService<IMultiChainCliControl>();
+            _control = provider.GetService<IMultiChainCliControl>();
         }
 
         [Test, Ignore("ClearMemPoolTests should be ran independent of other tests since the network must be paused for incoming and mining tasks")]
         public async Task ClearMemPoolTestAsync()
         {
             // Act - Pause blockchain network actions
-            CliResponse<object> pause = await Control.PauseAsync(
-                blockchainName: Control.CliOptions.ChainName,
+            CliResponse<object> pause = await _control.PauseAsync(
+                blockchainName: _control.CliOptions.ChainName,
                 tasks: NodeTask.All);
 
             // Act - Clear blockchain mem pool
-            CliResponse<string> clearMemPool = await Control.ClearMemPoolAsync(Control.CliOptions.ChainName);
+            CliResponse<string> clearMemPool = await _control.ClearMemPoolAsync(_control.CliOptions.ChainName);
 
             // Act - Resume blockchain network actions
-            CliResponse<object> resume = await Control.ResumeAsync(
-                blockchainName: Control.CliOptions.ChainName,
+            CliResponse<object> resume = await _control.ResumeAsync(
+                blockchainName: _control.CliOptions.ChainName,
                 tasks: NodeTask.All);
 
             // Assert
@@ -58,8 +58,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetBlockchainParamsTestAsync()
         {
             // Act - Ask network for blockchain params
-            CliResponse<GetBlockchainParamsResult> actual = await Control.GetBlockchainParamsAsync(
-                blockchainName: Control.CliOptions.ChainName,
+            CliResponse<GetBlockchainParamsResult> actual = await _control.GetBlockchainParamsAsync(
+                blockchainName: _control.CliOptions.ChainName,
                 display_names: true,
                 with_upgrades: true);
 
@@ -73,7 +73,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetInfoTestAsync()
         {
             // Act - Ask network for information about this blockchain
-            CliResponse<GetInfoResult> actual = await Control.GetInfoAsync(Control.CliOptions.ChainName);
+            CliResponse<GetInfoResult> actual = await _control.GetInfoAsync(_control.CliOptions.ChainName);
 
             // Assert
             Assert.IsEmpty(actual.Error);
@@ -82,10 +82,22 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         }
 
         [Test]
+        public async Task GetInitStatusTestAsync()
+        {
+            // Act - Ask network for information about this blockchain
+            CliResponse<GetInitStatusResult> actual = await _control.GetInitStatusAsync(_control.CliOptions.ChainName);
+
+            // Assert
+            Assert.IsEmpty(actual.Error);
+            Assert.IsNotNull(actual.Result);
+            Assert.IsInstanceOf<CliResponse<GetInitStatusResult>>(actual);
+        }
+
+        [Test]
         public async Task GetRuntimeParamsTestAsync()
         {
             // Act - Ask blockchain network for runtime parameters
-            CliResponse<GetRuntimeParamsResult> actual = await Control.GetRuntimeParamsAsync(Control.CliOptions.ChainName);
+            CliResponse<GetRuntimeParamsResult> actual = await _control.GetRuntimeParamsAsync(_control.CliOptions.ChainName);
 
             // Assert
             Assert.IsEmpty(actual.Error);
@@ -97,8 +109,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task HelpTestAsync()
         {
             // Act - Get help information based on blockchain method name
-            CliResponse<object> actual = await Control.HelpAsync(
-                blockchainName: Control.CliOptions.ChainName,
+            CliResponse<object> actual = await _control.HelpAsync(
+                blockchainName: _control.CliOptions.ChainName,
                 command: BlockchainAction.GetAssetInfoMethod);
 
             // Assert
@@ -111,8 +123,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task SetLastBlockTestAsync()
         {
             // Act - Sets last block in blockchain
-            CliResponse<object> actual = await Control.SetLastBlockAsync(
-                blockchainName: Control.CliOptions.ChainName,
+            CliResponse<object> actual = await _control.SetLastBlockAsync(
+                blockchainName: _control.CliOptions.ChainName,
                 hash_or_height: "60");
 
             // Assert
@@ -128,8 +140,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var OneMiB = "1048576";
 
             // ### Act - Set a specific runtime parameter with a specific value
-            var actual = await Control.SetRuntimeParamAsync(
-                blockchainName: Control.CliOptions.ChainName,
+            var actual = await _control.SetRuntimeParamAsync(
+                blockchainName: _control.CliOptions.ChainName,
                 parameter_name: RuntimeParam.MaxShownData,
                 parameter_value: OneMiB);
 
@@ -143,7 +155,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task StopTestAsync()
         {
             // Act - Stops the current blockchain network
-            var actual = await Control.StopAsync(Control.CliOptions.ChainName);
+            var actual = await _control.StopAsync(_control.CliOptions.ChainName);
 
             // Assert
             Assert.IsEmpty(actual.Error);
