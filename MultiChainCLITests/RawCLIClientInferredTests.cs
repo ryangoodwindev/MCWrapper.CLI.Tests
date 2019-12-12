@@ -62,7 +62,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(newAddress_0);
 
 
-            var grant = await Wallet.GrantAsync(newAddress_0.Result, "\"" + Permission.Receive + "," + Permission.Send + "\"");
+            var grant = await Wallet.GrantAsync(newAddress_0.Result, $"{Permission.Receive},{Permission.Send}");
 
             Assert.IsEmpty(grant.Error);
             Assert.IsNotNull(grant.Result);

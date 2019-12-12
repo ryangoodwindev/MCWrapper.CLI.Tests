@@ -121,7 +121,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
                 entity_type: Entity.TxFilter,
                 entity_name: StreamFilterEntity.GetUUID(),
                 restrictions_or_open: new { },
-                custom_fields: JsCode.DummyTxFilterCodeEscapedForWindowsCLI);
+                custom_fields: JsCode.DummyTxFilterCode);
 
             // Assert
             Assert.IsEmpty(filter.Error);
@@ -365,7 +365,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
                 entity_type: Entity.StreamFilter,
                 entity_name: StreamFilterEntity.GetUUID(),
                 restrictions_or_open: new { },
-                custom_fields: JsCode.DummyStreamFilterCodeEscapedForWindowsCLI);
+                custom_fields: JsCode.DummyStreamFilterCode);
 
             // Assert
             Assert.IsEmpty(streamFilter.Error);
@@ -393,9 +393,11 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
                 verbose: true);
 
             // Act - Execute transaction filter
-            CliResponse<RunTxFilterResult> actual = await Blockchain.RunTxFilterAsync(
+            var result = txFilter.Result.FirstOrDefault();
+            var actual = await Blockchain.RunTxFilterAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
-                filter_identifier: txFilter.Result.FirstOrDefault().Name);
+                filter_identifier: result.Name,
+                tx_hex: result.CreateTxid);
 
             // Assert
             Assert.IsEmpty(actual.Error);
@@ -410,7 +412,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             CliResponse<TestStreamFilterResult> actual = await Blockchain.TestStreamFilterAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 restrictions: new { },
-                javascript_code: JsCode.DummyStreamFilterCodeEscapedForWindowsCLI);
+                javascript_code: JsCode.DummyStreamFilterCode);
 
             // Assert
             Assert.IsEmpty(actual.Error);
@@ -425,7 +427,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             CliResponse<TestTxFilterResult> actual = await Blockchain.TestTxFilterAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 restrictions: new { },
-                javascript_code: JsCode.DummyTxFilterCodeEscapedForWindowsCLI);
+                javascript_code: JsCode.DummyTxFilterCode);
 
             // Assert
             Assert.IsEmpty(actual.Error);

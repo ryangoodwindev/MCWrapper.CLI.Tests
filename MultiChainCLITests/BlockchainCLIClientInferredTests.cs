@@ -128,7 +128,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
                 entity_type: Entity.TxFilter,
                 entity_name: StreamFilterEntity.GetUUID(),
                 restrictions_or_open: new { },
-                custom_fields: JsCode.DummyTxFilterCodeEscapedForWindowsCLI);
+                custom_fields: JsCode.DummyTxFilterCode);
 
             // Assert
             Assert.IsEmpty(filter.Error);
@@ -353,7 +353,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
                 entity_type: Entity.StreamFilter,
                 entity_name: StreamFilterEntity.GetUUID(),
                 restrictions_or_open: new { },
-                custom_fields: JsCode.DummyStreamFilterCodeEscapedForWindowsCLI);
+                custom_fields: JsCode.DummyStreamFilterCode);
 
             // Assert
             Assert.IsEmpty(streamFilter.Error);
@@ -392,7 +392,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Act - Test stream filter
             CliResponse<TestStreamFilterResult> actual = await Blockchain.TestStreamFilterAsync(
                 restrictions: new { },
-                javascript_code: JsCode.DummyStreamFilterCodeEscapedForWindowsCLI);
+                javascript_code: JsCode.DummyStreamFilterCode);
 
             // Assert
             Assert.IsEmpty(actual.Error);
@@ -406,7 +406,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Act - Test transaction filter
             CliResponse<TestTxFilterResult> actual = await Blockchain.TestTxFilterAsync(
                 restrictions: new { },
-                javascript_code: JsCode.DummyTxFilterCodeEscapedForWindowsCLI);
+                javascript_code: JsCode.DummyTxFilterCode);
 
             // Assert
             Assert.IsEmpty(actual.Error);

@@ -8,11 +8,11 @@
         /// <summary>
         /// Unescaped Transaction Filter used for testing purposes
         /// </summary>
-        public const string DummyTxFilterCodeEscapedForWindowsCLI = "\"function filtertransaction() { var tx=getfiltertransaction(); if (tx.vout.length > 100) return 'One output required';}\"";
+        public const string DummyTxFilterCode = "function filtertransaction() { var tx=getfiltertransaction(); if (tx.vout.length > 100) return 'One output required';}";
 
         /// <summary>
         /// Unescaped Stream Filter used for testing purposes
         /// </summary>
-        public const string DummyStreamFilterCodeEscapedForWindowsCLI = "\"function filterstreamitem() { var item=getfilterstreamitem(); if (item.keys.length > 100) return 'At least two keys required';}\"";
+        public const string DummyStreamFilterCode = "function filterstreamitem() { var item=getfilterstreamitem(); if (item.keys.length > 100) return 'At least two keys required';}";
     }
 }

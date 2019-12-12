@@ -120,7 +120,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ApproveFromTestAsync()
         {
             // Stage
-            var filter = await Wallet.CreateAsync(Options.ChainName, Entity.StreamFilter, StreamEntity.GetUUID(), new { }, JsCode.DummyStreamFilterCodeEscapedForWindowsCLI);
+            var filter = await Wallet.CreateAsync(Options.ChainName, Entity.StreamFilter, StreamEntity.GetUUID(), new { }, JsCode.DummyStreamFilterCode);
 
             // Assert
             Assert.IsEmpty(filter.Error);
@@ -442,7 +442,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetAddressTransactionTestAsync()
         {
             // Stage
-            var transaction = await Wallet.IssueAsync(Options.ChainName, Node, new AssetEntity().Name, 100, 1, 0.1m);
+            var transaction = await Wallet.IssueAsync(Options.ChainName, Node, new AssetEntity().Name, 100, 1, 0);
 
             // Act
             var actual = await Wallet.GetAddressTransactionAsync(Options.ChainName, Node, transaction.Result, true);
@@ -683,7 +683,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetWalletTransactionTestAsync()
         {
             // Stage
-            var publish = await Wallet.PublishFromAsync(Options.ChainName, Node, "root", ChainEntity.GetUUID(), "Stream item data".ToHex());
+            var publish = await Wallet.PublishFromAsync(blockchainName: Options.ChainName, Node, "root", ChainEntity.GetUUID(), "Stream item data".ToHex());
 
             // Act
             var actual = await Wallet.GetWalletTransactionAsync(Options.ChainName, publish.Result, true, true);
@@ -728,7 +728,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var newAddress = await Wallet.GetNewAddressAsync(blockchainName: Options.ChainName);
 
             // Act
-            var actual = await Wallet.GrantWithDataFromAsync(Options.ChainName, Node, newAddress.Result, Permission.Receive, "some_data".ToHex());
+            var actual = await Wallet.GrantWithDataFromAsync(blockchainName: Options.ChainName, Node, newAddress.Result, Permission.Receive, "some_data".ToHex());
 
             // Assert
             Assert.IsEmpty(actual.Error);

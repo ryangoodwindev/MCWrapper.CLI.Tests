@@ -197,7 +197,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var filter = new StreamFilterEntity
             {
                 Name = StreamFilterEntity.GetUUID(),
-                JavaScriptCode = JsCode.DummyStreamFilterCodeEscapedForWindowsCLI
+                JavaScriptCode = JsCode.DummyStreamFilterCode
             };
 
             // Act - attempt to create a new Stream Filter using the inferred blockchain name
@@ -216,7 +216,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var filter = new StreamFilterEntity
             {
                 Name = StreamFilterEntity.GetUUID(),
-                JavaScriptCode = JsCode.DummyStreamFilterCodeEscapedForWindowsCLI
+                JavaScriptCode = JsCode.DummyStreamFilterCode
             };
 
             // Act - attempt to create a new Stream Filter using the explicit blockchain name
@@ -235,7 +235,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var filter = new StreamFilterEntity
             {
                 Name = StreamFilterEntity.GetUUID(),
-                JavaScriptCode = JsCode.DummyStreamFilterCodeEscapedForWindowsCLI
+                JavaScriptCode = JsCode.DummyStreamFilterCode
             };
 
             // Act - attempt to create a new Stream Filter from an address using the inferred blockchain name
@@ -254,7 +254,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var filter = new StreamFilterEntity
             {
                 Name = StreamFilterEntity.GetUUID(),
-                JavaScriptCode = JsCode.DummyStreamFilterCodeEscapedForWindowsCLI
+                JavaScriptCode = JsCode.DummyStreamFilterCode
             };
 
             // Act - attempt to create a new Stream Filter from an address using the explicit blockchain name
@@ -275,7 +275,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
             filter.Restrictions._For = "root";
-            filter.JavaScriptCode = JsCode.DummyTxFilterCodeEscapedForWindowsCLI;
+            filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter using the inferred blockchain name
             var createFilter = await Wallet.CreateTxFilter(filter);
@@ -292,7 +292,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
             filter.Restrictions._For = "root";
-            filter.JavaScriptCode = JsCode.DummyTxFilterCodeEscapedForWindowsCLI;
+            filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter using the explicit blockchain name
             var createFilter = await Wallet.CreateTxFilter(Wallet.CliOptions.ChainName, filter);
@@ -309,7 +309,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
             filter.Restrictions._For = "root";
-            filter.JavaScriptCode = JsCode.DummyTxFilterCodeEscapedForWindowsCLI;
+            filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter from an address using the inferred blockchain name
             var createFilterFrom = await Wallet.CreateTxFilterFrom(Wallet.CliOptions.ChainAdminAddress, filter);
@@ -326,7 +326,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
             filter.Restrictions._For = "root";
-            filter.JavaScriptCode = JsCode.DummyTxFilterCodeEscapedForWindowsCLI;
+            filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter from an address using the explicit blockchain name
             var createFilterFrom = await Wallet.CreateTxFilterFrom(Wallet.CliOptions.ChainName, Wallet.CliOptions.ChainAdminAddress, filter);

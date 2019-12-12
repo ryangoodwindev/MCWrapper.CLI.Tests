@@ -115,7 +115,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ApproveFromTestAsync()
         {
             // Stage
-            var filter = await Wallet.CreateAsync(Entity.StreamFilter, StreamEntity.GetUUID(), new { }, JsCode.DummyStreamFilterCodeEscapedForWindowsCLI);
+            var filter = await Wallet.CreateAsync(Entity.StreamFilter, StreamEntity.GetUUID(), new { }, JsCode.DummyStreamFilterCode);
 
             // Assert
             Assert.IsEmpty(filter.Error);
