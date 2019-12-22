@@ -66,14 +66,52 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetBlockAsyncTest()
         {
             // Act - fetch a block from the network
-            var block = await Blockchain.GetBlockAsync<GetBlockVerboseResult>(
-                hash_or_height: "60",
-                verbose: true);
+            var encoded = await Blockchain.GetBlockEncodedAsync(hashOrHeight: "1");
 
             // Assert
-            Assert.IsEmpty(block.Error);
-            Assert.IsNotEmpty(block.Request.ChainName);
-            Assert.IsInstanceOf<CliResponse<GetBlockVerboseResult>>(block);
+            Assert.IsEmpty(encoded.Error);
+            Assert.IsNotEmpty(encoded.Request.ChainName);
+            Assert.IsInstanceOf<CliResponse<string>>(encoded);
+
+            // Act - fetch a block from the network
+            var verbose = await Blockchain.GetBlockVerboseAsync(hashOrHeight: "2");
+
+            // Assert
+            Assert.IsEmpty(verbose.Error);
+            Assert.IsNotEmpty(verbose.Request.ChainName);
+            Assert.IsInstanceOf<CliResponse<GetBlockVerboseResult>>(verbose);
+
+            // Act - fetch a block from the network
+            var version1 = await Blockchain.GetBlockV1Async(hashOrHeight: "3");
+
+            // Assert
+            Assert.IsEmpty(version1.Error);
+            Assert.IsNotEmpty(version1.Request.ChainName);
+            Assert.IsInstanceOf<CliResponse<GetBlockV1Result>>(version1);
+
+            // Act - fetch a block from the network
+            var version2 = await Blockchain.GetBlockV2Async(hashOrHeight: "4");
+
+            // Assert
+            Assert.IsEmpty(version2.Error);
+            Assert.IsNotEmpty(version2.Request.ChainName);
+            Assert.IsInstanceOf<CliResponse<GetBlockV2Result>>(version2);
+
+            // Act - fetch a block from the network
+            var version3 = await Blockchain.GetBlockV3Async(hashOrHeight: "5");
+
+            // Assert
+            Assert.IsEmpty(version3.Error);
+            Assert.IsNotEmpty(version3.Request.ChainName);
+            Assert.IsInstanceOf<CliResponse<GetBlockV3Result>>(version3);
+
+            // Act - fetch a block from the network
+            var version4 = await Blockchain.GetBlockV4Async(hashOrHeight: "6");
+
+            // Assert
+            Assert.IsEmpty(version4.Error);
+            Assert.IsNotEmpty(version4.Request.ChainName);
+            Assert.IsInstanceOf<CliResponse<GetBlockV4Result>>(version4);
         }
 
         [Test]
