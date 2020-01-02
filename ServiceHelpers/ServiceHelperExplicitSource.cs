@@ -1,6 +1,5 @@
 ﻿using MCWrapper.CLI.Extensions;
 using MCWrapper.Ledger.Entities.Options;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MCWrapper.CLI.Tests.ServiceHelpers
@@ -22,13 +21,6 @@ namespace MCWrapper.CLI.Tests.ServiceHelpers
         /// </summary>
         public ServiceHelperExplicitSource()
         {
-            // fetch JSON config values
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            // Configuration interface
-            IConfiguration configuration = builder.Build();
-
             // Add MultiChain library services to the collection
             // Our values are null and empty since our local testing environment has the necessary
             // variables preloaded as environment variables. This just demonstrates how a 
@@ -42,12 +34,12 @@ namespace MCWrapper.CLI.Tests.ServiceHelpers
             //
             ServiceCollection.AddMultiChainCoreCliServices(profile => 
                 {
-                    profile.ChainName = "";
-                    profile.ChainAdminAddress = "";
-                    profile.ChainBurnAddress = "";
-                    profile.ChainBinaryLocation = @"";
-                    profile.ChainDefaultLocation = @"";
-                    profile.ChainDefaultColdNodeLocation = @"";
+                    profile.ChainName = "CurrencyTestCoin"; // your value may differ
+                    profile.ChainAdminAddress = "15UxmgMF9AM7JcXZKn4JcKutuQ6q7iSNp4RHVg"; // your value may differ
+                    profile.ChainBurnAddress = "1XXXXXXXatXXXXXXP9XXXXXXTdXXXXXXXMSFht"; // your value may differ
+                    profile.ChainBinaryLocation = string.Empty; // not required; directory is auto-detected
+                    profile.ChainDefaultLocation = string.Empty; // not required; directory is auto-detected
+                    profile.ChainDefaultColdNodeLocation = string.Empty; // not required; directory is auto-detected
                 }, runtime => new RuntimeParamOptions());
 
             // build and store Service provider

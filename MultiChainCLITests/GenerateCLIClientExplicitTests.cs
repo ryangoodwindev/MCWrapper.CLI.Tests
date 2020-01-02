@@ -14,7 +14,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public GenerateCLIClientExplicitTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             Generate = provider.GetService<IMultiChainCliGenerate>();
         }

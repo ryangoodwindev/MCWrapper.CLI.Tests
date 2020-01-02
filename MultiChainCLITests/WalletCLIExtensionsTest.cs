@@ -18,7 +18,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public WalletCLIExtensionsTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             // fetch services from provider
             Wallet = provider.GetService<IMultiChainCliWallet>();

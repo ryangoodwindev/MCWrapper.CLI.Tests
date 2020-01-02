@@ -13,7 +13,7 @@ namespace MCWrapper.CLI.Tests.MachineShopTests
 
         public ForgeMachinistTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             Blocksmith = provider.GetService<IMultiChainCliForge>();
         }

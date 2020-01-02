@@ -14,7 +14,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public MineCLIClientInferredTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             _cliClient = provider.GetService<IMultiChainCliMining>();
         }

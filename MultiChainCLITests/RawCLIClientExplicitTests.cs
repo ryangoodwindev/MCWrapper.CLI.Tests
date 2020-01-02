@@ -21,7 +21,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public RawCLIClientExplicitTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             Raw = provider.GetService<IMultiChainCliRaw>();
             Wallet = provider.GetService<IMultiChainCliWallet>();

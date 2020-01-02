@@ -17,7 +17,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public ControlCLIClientInferredTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             _control = provider.GetService<IMultiChainCliControl>();
         }

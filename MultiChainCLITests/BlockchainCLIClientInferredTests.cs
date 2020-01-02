@@ -21,7 +21,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public BlockchainCLIClientInferredTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             Wallet = provider.GetService<IMultiChainCliWallet>();
             Blockchain = provider.GetService<IMultiChainCliGeneral>();

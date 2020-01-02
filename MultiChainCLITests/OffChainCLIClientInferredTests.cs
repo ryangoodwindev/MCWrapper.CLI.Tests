@@ -13,7 +13,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
         public OffChainCLIClientInferredTests()
         {
-            var provider = new ServiceHelperParameterlessConstructor();
+            var provider = new ServiceHelperExplicitSource();
 
             OffChain = provider.GetService<IMultiChainCliOffChain>();
         }
