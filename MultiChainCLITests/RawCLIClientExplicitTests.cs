@@ -36,10 +36,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             var asset_0 = await Wallet.IssueAsync(
                 blockchainName: Wallet.CliOptions.ChainName,
-                to_address: Wallet.CliOptions.ChainAdminAddress,
-                asset_params: assetModel_0,
+                toAddress: Wallet.CliOptions.ChainAdminAddress,
+                assetParams: assetModel_0,
                 quantity: 100,
-                smallest_unit: 1);
+                smallestUnit: 1, default, default);
 
             Assert.IsEmpty(asset_0.Error);
             Assert.IsNotEmpty(asset_0.Result);
@@ -47,10 +47,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             var asset_1 = await Wallet.IssueAsync(
                 blockchainName: Wallet.CliOptions.ChainName,
-                to_address: Wallet.CliOptions.ChainAdminAddress,
-                asset_params: assetModel_1,
+                toAddress: Wallet.CliOptions.ChainAdminAddress,
+                assetParams: assetModel_1,
                 quantity: 100,
-                smallest_unit: 1);
+                smallestUnit: 1, default, default);
 
             Assert.IsEmpty(asset_1.Error);
             Assert.IsNotEmpty(asset_1.Result);
@@ -68,7 +68,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             Assert.IsEmpty(grant.Error);
             Assert.IsNotNull(grant.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(grant);
+            Assert.IsInstanceOf<CliResponse<string>>(grant);
 
             var listUnspent = await Wallet.ListUnspentAsync(Wallet.CliOptions.ChainName, 0, 9999, new[] { Wallet.CliOptions.ChainAdminAddress });
 

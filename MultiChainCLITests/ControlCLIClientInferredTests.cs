@@ -102,24 +102,24 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task HelpTestAsync()
         {
             // Act - Get help information based on blockchain method name
-            CliResponse<object> actual = await _control.HelpAsync(command: BlockchainAction.GetAssetInfoMethod);
+            CliResponse<string> actual = await _control.HelpAsync(command: BlockchainAction.GetAssetInfoMethod);
 
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("Test is ignored since it can be destructive to the current blockchain")]
         public async Task SetLastBlockTestAsync()
         {
             // Act - Sets last block in blockchain
-            CliResponse<object> actual = await _control.SetLastBlockAsync(hash_or_height: "60");
+            CliResponse<string> actual = await _control.SetLastBlockAsync(hash_or_height: "60");
 
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]

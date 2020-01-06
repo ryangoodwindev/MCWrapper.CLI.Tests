@@ -76,7 +76,8 @@ namespace MCWrapper.CLI.Tests.MachineShopTests
             Assert.IsNotEmpty(stopColdNode.StandardOutput);
         }
 
-        [Test, Ignore("Test is passing, just takes too long during normal development stages/modes")]
+        [Test]
+        [Ignore("Test is passing, just takes too long during normal development stages/modes")]
         public async Task CreateOneHundredBlockchainsAndColdNodes()
         {
             for (int i = 0; i < 100; i++)

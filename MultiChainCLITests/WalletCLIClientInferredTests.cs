@@ -57,10 +57,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Stage - Issue a new asset to the blockchain node 
             var asset = await Wallet.IssueAsync(
-                to_address: Options.ChainAdminAddress,
-                asset_params: new AssetEntity().Name,
+                toAddress: Options.ChainAdminAddress,
+                assetname: new AssetEntity().Name,
                 quantity: 100,
-                smallest_unit: 1);
+                smallestUnit: 1, default, default);
 
             // Assert
             Assert.IsEmpty(asset.Error);
@@ -433,7 +433,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetAddressTransactionTestAsync()
         {
             // Stage
-            var transaction = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, 1, 0.1m);
+            var transaction = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, 1, 0.1m, default);
 
             // Act
             var actual = await Wallet.GetAddressTransactionAsync(Node, transaction.Result, true);
@@ -460,7 +460,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetAssetTransactionTestAsync()
         {
             // Stage
-            var asset = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallest_unit: 1);
+            var asset = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallestUnit: 1, default, default);
 
             // Stage
             await Wallet.SubscribeAsync(entity_identifiers: asset.Result, false);
@@ -612,7 +612,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetTransactionTestAsync()
         {
             // Stage
-            var txid = await Wallet.IssueFromAsync(Node, Node, new AssetEntity().Name, 1000, 0.1);
+            var txid = await Wallet.IssueFromAsync(Node, Node, new AssetEntity().Name, 1000, 0.1, default, default);
 
             // Assert
             Assert.IsEmpty(txid.Error);
@@ -697,7 +697,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -709,7 +709,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -724,7 +724,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -739,7 +739,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("I don't want to import any addresses during unit testing")]
@@ -778,22 +778,68 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<object>>(actual);
         }
 
-        public async Task IssueFromTestAsync()
+        public async Task IssueFromTestStronglyTypedAsync()
         {
             // Act
-            var actual = await Wallet.IssueFromAsync(Node, Node, new AssetEntity().Name, 100, 1, 0.1m);
+            var act_1 = await Wallet.IssueFromAsync(Node, Node, new AssetEntity(), 100, 1, 0.1m, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
 
             // Assert
-            Assert.IsEmpty(actual.Error);
-            Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<string>>(actual);
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueFromAsync(Node, Node, new AssetEntity(), 100, 1, 0.1m, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
+        }
+
+        public async Task IssueFromTestGenericallyTypedAsync()
+        {
+            // Act
+            var act_1 = await Wallet.IssueFromAsync(Node, Node, new { name = UUID.NoHyphens }, 100, 1, 0.1m, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
+
+            // Assert
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueFromAsync(Node, Node, new { name = UUID.NoHyphens }, 100, 1, 0.1m, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
+        }
+
+        public async Task IssueFromTestStringNameAsync()
+        {
+            // Act
+            var act_1 = await Wallet.IssueFromAsync(Node, Node, UUID.NoHyphens, 100, 1, 0.1m, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
+
+            // Assert
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueFromAsync(Node, Node, UUID.NoHyphens, 100, 1, 0.1m, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
         }
 
         [Test]
         public async Task IssueMoreFromTestAsync()
         {
             // Stage
-            var issue = await Wallet.IssueFromAsync(Node, Node, new AssetEntity(), 100, 1);
+            var issue = await Wallet.IssueFromAsync(Node, Node, new AssetEntity(), 100, 1, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
 
             // Assert
             Assert.IsEmpty(issue.Error);
@@ -801,19 +847,27 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(issue);
 
             // Act
-            var actual = await Wallet.IssueMoreFromAsync(Node, Node, issue.Result.ToString(), 100);
+            var act_1 = await Wallet.IssueMoreFromAsync(Node, Node, issue.Result.ToString(), 100, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
 
             // Assert
-            Assert.IsEmpty(actual.Error);
-            Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<object>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueMoreFromAsync(Node, Node, issue.Result.ToString(), 100, 0, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<object>>(act_2);
         }
 
         [Test]
         public async Task IssueMoreTestAsync()
         {
             // Stage
-            var issue = await Wallet.IssueAsync(Node, new AssetEntity(), 100, 1);
+            var issue = await Wallet.IssueAsync(Node, new AssetEntity(), 100, 1, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
 
             // Assert
             Assert.IsEmpty(issue.Error);
@@ -821,24 +875,80 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(issue);
 
             // Act
-            var actual = await Wallet.IssueMoreAsync(Node, issue.Result.ToString(), 100);
+            var act_1 = await Wallet.IssueMoreAsync(Node, issue.Result.ToString(), 100, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
 
             // Assert
-            Assert.IsEmpty(actual.Error);
-            Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<object>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueMoreAsync(Node, issue.Result.ToString(), 100, 0, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<object>>(act_2);
         }
 
         [Test]
-        public async Task IssueTestAsync()
+        public async Task IssueTestStronglyTypedAsync()
         {
             // Act
-            var actual = await Wallet.IssueAsync(Options.ChainAdminAddress, new AssetEntity(), 100, 1);
+            var act_1 = await Wallet.IssueAsync(Options.ChainAdminAddress, new AssetEntity(), 100, 1, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
 
             // Assert
-            Assert.IsEmpty(actual.Error);
-            Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<string>>(actual);
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueAsync(Options.ChainAdminAddress, new AssetEntity(), 100, 1, 0, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
+        }
+
+        [Test]
+        public async Task IssueTestGenericallyTypedAsync()
+        {
+            // Act
+            var act_1 = await Wallet.IssueAsync(Options.ChainAdminAddress, new { name = UUID.NoHyphens }, 100, 1, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
+
+            // Assert
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueAsync(Options.ChainAdminAddress, new { name = UUID.NoHyphens }, 100, 1, 0, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
+        }
+
+        [Test]
+        public async Task IssueTestStringNameAsync()
+        {
+            // Act
+            var act_1 = await Wallet.IssueAsync(Options.ChainAdminAddress, UUID.NoHyphens, 100, 1, 0, new Dictionary<string, string> { { "text", "Text for the chain".ToHex() } });
+
+            // Assert
+            Assert.IsEmpty(act_1.Error);
+            Assert.IsNotNull(act_1.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
+
+            // Act
+            var act_2 = await Wallet.IssueAsync(Options.ChainAdminAddress, UUID.NoHyphens, 100, 1, 0, new { text = "Text for the chain".ToHex() });
+
+            // Assert
+            Assert.IsEmpty(act_2.Error);
+            Assert.IsNotNull(act_2.Result);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
         }
 
         [Test]
@@ -905,7 +1015,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ListAssetTransactionsTestAsync()
         {
             // Stage
-            var issue = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallest_unit: 1);
+            var issue = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallestUnit: 1, default, default);
 
             // Stage
             await Wallet.SubscribeAsync(entity_identifiers: issue.Result, false);
@@ -1238,7 +1348,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(grant.Error);
             Assert.IsNotNull(grant.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(grant);
+            Assert.IsInstanceOf<CliResponse<string>>(grant);
 
             // Act - Revoke send permission
             var actual = await Wallet.RevokeAsync(newAddress.Result, "send");
@@ -1283,7 +1393,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task SendAssetTestAsync()
         {
             // Stage
-            var asset = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallest_unit: 1);
+            var asset = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallestUnit: 1, default, default);
 
             // Act
             var actual = await Wallet.SendAssetAsync(Node, asset.Result, 1);
@@ -1298,7 +1408,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task SendAssetFromTestAsync()
         {
             // Stage
-            var asset = await Wallet.IssueAsync(Node, new AssetEntity(), 100, 1);
+            var asset = await Wallet.IssueAsync(Node, new AssetEntity(), 100, 1, default, default);
 
             // Act
             var actual = await Wallet.SendAssetFromAsync(Node, Node, asset.Result, 1);

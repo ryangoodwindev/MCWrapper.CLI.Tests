@@ -31,7 +31,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetAssetInfoAsyncTest()
         {
             // Stage - issue a new asset to the blockchain node
-            var asset = await Wallet.IssueAsync(Blockchain.CliOptions.ChainName, Blockchain.CliOptions.ChainAdminAddress, new AssetEntity().Name, 10, 0.1);
+            var asset = await Wallet.IssueAsync(Blockchain.CliOptions.ChainName, Blockchain.CliOptions.ChainAdminAddress, new AssetEntity().Name, 10, 0.1, default, default);
 
             // Assert
             Assert.IsEmpty(asset.Error);
@@ -240,10 +240,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Act - Issue a new asset to the blockchain node
             var asset = await Wallet.IssueAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
-                to_address: Blockchain.CliOptions.ChainAdminAddress,
-                asset_params: AssetEntity.GetUUID(),
+                toAddress: Blockchain.CliOptions.ChainAdminAddress,
+                assetName: AssetEntity.GetUUID(),
                 quantity: 1,
-                smallest_unit: 0.1);
+                smallestUnit: 0.1, default, default);
 
             Assert.IsEmpty(asset.Error);
             Assert.IsNotNull(asset.Result);
@@ -386,14 +386,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ListUpgradesAsyncTest()
         {
             // Act - List of upgrades
-            CliResponse<object> actual = await Blockchain.ListUpgradesAsync(
+            CliResponse<ListUpgradesResult[]> actual = await Blockchain.ListUpgradesAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
-                upgrade_identifiers: "*");
+                upgrade_identifier: "*");
 
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<ListUpgradesResult[]>>(actual);
         }
 
         [Test]

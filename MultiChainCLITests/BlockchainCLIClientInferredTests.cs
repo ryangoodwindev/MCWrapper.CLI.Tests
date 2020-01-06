@@ -32,10 +32,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Stage - issue a new asset to the blockchain node
             var asset = await Wallet.IssueAsync(
-                to_address: Blockchain.CliOptions.ChainAdminAddress,
-                asset_params: new AssetEntity(),
+                toAddress: Blockchain.CliOptions.ChainAdminAddress,
+                assetParams: new AssetEntity(),
                 quantity: 10,
-                smallest_unit: 0.1);
+                smallestUnit: 0.1, default, default);
 
             // Assert
             Assert.IsEmpty(asset.Error);
@@ -237,10 +237,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Act - Issue a new asset to the blockchain node
             var asset = await Wallet.IssueAsync(
-                to_address: Blockchain.CliOptions.ChainAdminAddress,
-                asset_params: new AssetEntity().Name,
+                toAddress: Blockchain.CliOptions.ChainAdminAddress,
+                assetname: new AssetEntity().Name,
                 quantity: 1,
-                smallest_unit: 0.1);
+                smallestUnit: 0.1, default, default);
 
             Assert.IsEmpty(asset.Error);
             Assert.IsNotNull(asset.Result);
@@ -374,12 +374,12 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ListUpgradesAsyncTest()
         {
             // Act - List of upgrades
-            CliResponse<object> actual = await Blockchain.ListUpgradesAsync(upgrade_identifiers: "*");
+            CliResponse<ListUpgradesResult[]> actual = await Blockchain.ListUpgradesAsync(upgrade_identifier: "*");
 
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<ListUpgradesResult[]>>(actual);
         }
 
         [Test]
