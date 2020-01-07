@@ -58,7 +58,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<GetChunkQueueInfoResult>>(actual);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<GetChunkQueueInfoTotalsResult>>(actual);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<int>>(actual);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<GetNetTotalsResult>>(actual);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<GetPeerInfoResult[]>>(actual);
         }
 
         [Test]
@@ -129,8 +129,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Assert
             Assert.IsEmpty(actual.Error);
-            Assert.IsNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<object>(actual.Result);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
     }
 }

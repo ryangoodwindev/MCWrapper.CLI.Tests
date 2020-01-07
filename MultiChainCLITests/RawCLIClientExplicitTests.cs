@@ -119,7 +119,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             Assert.IsEmpty(rawChange.Error);
             Assert.IsNotNull(rawChange.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(rawChange);
+            Assert.IsInstanceOf<CliResponse<string>>(rawChange);
 
             var rawData = await Raw.AppendRawDataAsync(Raw.CliOptions.ChainName, $"{rawChange.Result}", new
             {
@@ -128,7 +128,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             Assert.IsEmpty(rawData.Error);
             Assert.IsNotNull(rawData.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(rawData);
+            Assert.IsInstanceOf<CliResponse<string>>(rawData);
 
             var signRaw = await Raw.SignRawTransactionAsync(blockchainName: Raw.CliOptions.ChainName, tx_hex: $"{rawData.Result}", null, null, null);
 
@@ -140,7 +140,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             Assert.IsEmpty(sendRaw.Error);
             Assert.IsNotNull(sendRaw.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(sendRaw);
+            Assert.IsInstanceOf<CliResponse<string>>(sendRaw);
         }
     }
 }

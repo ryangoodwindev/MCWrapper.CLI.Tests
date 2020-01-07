@@ -31,6 +31,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // returns new binary cache identifier
             var cache = await Utility.CreateBinaryCacheAsync();
 
+            // Assert
+            Assert.IsEmpty(cache.Error);
+            Assert.IsInstanceOf<CliResponse<string>>(cache);
+
             // Act - Append some string data converted to hex
             // Discard
             _ = await Utility.AppendBinaryCacheAsync(cache.Result, "Some data to append to the binary cache".ToHex());
@@ -39,20 +43,16 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // returns byte size int
             var append = await Utility.AppendBinaryCacheAsync(cache.Result, new AssetEntity().ObjectToHex());
 
-            // Act - Delete the new binary cache
-            var delete = await Utility.DeleteBinaryCacheAsync(cache.Result);
-
-            // Assert
-            Assert.IsEmpty(cache.Error);
-            Assert.IsInstanceOf<CliResponse<string>>(cache);
-
             // Assert
             Assert.IsEmpty(append.Error);
             Assert.IsInstanceOf<CliResponse<int>>(append);
 
+            // Act - Delete the new binary cache
+            var delete = await Utility.DeleteBinaryCacheAsync(cache.Result);
+
             // Assert
             Assert.IsEmpty(delete.Error);
-            Assert.IsInstanceOf<CliResponse<object>>(delete);
+            Assert.IsInstanceOf<CliResponse>(delete);
         }
 
         [Test]
@@ -81,22 +81,22 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task EstimateFeeAsyncTest()
         {
             // Act - fetch fee
-            var fee = await Utility.EstimateFeeAsync(300);
+            var fee = await Utility.EstimateFeeAsync(60);
 
             // Assert
             Assert.IsEmpty(fee.Error);
-            Assert.IsInstanceOf<CliResponse<object>>(fee);
+            Assert.IsInstanceOf<CliResponse<long>>(fee);
         }
 
         [Test]
         public async Task EstimatePriorityAsyncTest()
         {
             // Act - fetch priority
-            var priority = await Utility.EstimatePriorityAsync(300);
+            var priority = await Utility.EstimatePriorityAsync(60);
 
             // Assert
             Assert.IsEmpty(priority.Error);
-            Assert.IsInstanceOf<CliResponse<object>>(priority);
+            Assert.IsInstanceOf<CliResponse<float>>(priority);
         }
 
         [Test]

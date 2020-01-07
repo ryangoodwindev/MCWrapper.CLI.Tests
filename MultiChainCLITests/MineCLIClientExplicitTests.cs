@@ -1,6 +1,7 @@
 ﻿using MCWrapper.CLI.Connection;
 using MCWrapper.CLI.Ledger.Clients;
 using MCWrapper.CLI.Tests.ServiceHelpers;
+using MCWrapper.Data.Models.Mining;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var miningInfo = await Mining.GetMiningInfoAsync(Mining.CliOptions.ChainName);
 
             Assert.IsNotNull(miningInfo.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(miningInfo);
+            Assert.IsInstanceOf<CliResponse<GetMiningInfoResult>>(miningInfo);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var hashPs = await Mining.GetNetworkHashPsAsync(Mining.CliOptions.ChainName, 60, 60);
 
             Assert.IsNotNull(hashPs.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(hashPs);
+            Assert.IsInstanceOf<CliResponse<int>>(hashPs);
         }
 
         [Test, Ignore("Not supported by MultiChain v2.02")]

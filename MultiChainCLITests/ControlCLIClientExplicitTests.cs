@@ -26,7 +26,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ClearMemPoolTestAsync()
         {
             // Act - Pause blockchain network actions
-            CliResponse<object> pause = await _control.PauseAsync(
+            CliResponse<string> pause = await _control.PauseAsync(
                 blockchainName: _control.CliOptions.ChainName,
                 tasks: NodeTask.All);
 
@@ -34,14 +34,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             CliResponse<string> clearMemPool = await _control.ClearMemPoolAsync(_control.CliOptions.ChainName);
 
             // Act - Resume blockchain network actions
-            CliResponse<object> resume = await _control.ResumeAsync(
+            CliResponse<string> resume = await _control.ResumeAsync(
                 blockchainName: _control.CliOptions.ChainName,
                 tasks: NodeTask.All);
 
             // Assert
             Assert.IsEmpty(pause.Error);
             Assert.IsNotNull(pause.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(pause);
+            Assert.IsInstanceOf<CliResponse<string>>(pause);
 
             // Assert
             Assert.IsEmpty(pause.Error);
@@ -51,7 +51,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(pause.Error);
             Assert.IsNotNull(pause.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(resume);
+            Assert.IsInstanceOf<CliResponse<string>>(resume);
         }
 
         [Test]
@@ -140,15 +140,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var OneMiB = "1048576";
 
             // ### Act - Set a specific runtime parameter with a specific value
-            var actual = await _control.SetRuntimeParamAsync(
+            await _control.SetRuntimeParamAsync(
                 blockchainName: _control.CliOptions.ChainName,
                 parameter_name: RuntimeParam.MaxShownData,
                 parameter_value: OneMiB);
-
-            // Assert
-            Assert.IsEmpty(actual.Error);
-            Assert.IsNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
         }
 
         [Test, Ignore("Test is ignored since it can be destructive to the current blockchain")]

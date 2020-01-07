@@ -56,13 +56,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Act - Set coin generation on the local network
             // ! True => Coin (native currency) generation should be occurring
             // ! False => Coin (native currency) generation should not be occurring
-            var setGenerate = await Generate.SetGenerateAsync(true, maxProcessors);
-
-            // Assert
-            Assert.IsEmpty(setGenerate.Error);
-            Assert.IsNull(setGenerate.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(setGenerate);
-            Assert.IsInstanceOf<CLIRequest>(setGenerate.Request);
+            await Generate.SetGenerateAsync(true, maxProcessors);
         }
     }
 }
