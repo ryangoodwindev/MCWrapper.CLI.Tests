@@ -6,6 +6,7 @@ using MCWrapper.Ledger.Entities;
 using MCWrapper.Ledger.Entities.Extensions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MCWrapper.CLI.Tests.MultiChainCLITests
@@ -274,7 +275,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
-            filter.Restrictions._For = "root";
+            filter.Restrictions.@for = "root";
             filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter using the inferred blockchain name
@@ -291,7 +292,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
-            filter.Restrictions._For = "root";
+            filter.Restrictions.@for = "root";
             filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter using the explicit blockchain name
@@ -308,7 +309,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
-            filter.Restrictions._For = "root";
+            filter.Restrictions.@for = "root";
             filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter from an address using the inferred blockchain name
@@ -325,7 +326,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         {
             // Stage - create Tx Filter entity
             var filter = new TxFilterEntity();
-            filter.Restrictions._For = "root";
+            filter.Restrictions.@for = "root";
             filter.JavaScriptCode = JsCode.DummyTxFilterCode;
 
             // Act - attempt to create a new Tx Filter from an address using the explicit blockchain name
@@ -355,7 +356,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(publish);
 
             // Stage - create a new PublishEntity instance
-            streamItem = new PublishEntity("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(streamItem);
@@ -385,7 +386,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a new BinaryCache and then create a new PublishEntity instance
             binaryCache = await Utility.CreateBinaryCacheAsync();
             cachedData = new DataCached(binaryCache.Result);
-            streamItem = new PublishEntity<DataCached>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataCached>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(streamItem);
@@ -413,7 +414,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             jsonData = new DataJson(new { description = "Some Text Stuff".ToHex() });
-            streamItem = new PublishEntity<DataJson>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataJson>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(streamItem);
@@ -441,7 +442,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             textData = new DataText("Some_Data_Text_for_the_stream_item.".ToHex());
-            streamItem = new PublishEntity<DataText>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataText>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(streamItem);
@@ -470,7 +471,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(publish);
 
             // Stage - create a new PublishEntity instance
-            streamItem = new PublishEntity("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(Wallet.CliOptions.ChainName, streamItem);
@@ -500,7 +501,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a new BinaryCache and then create a new PublishEntity instance
             binaryCache = await Utility.CreateBinaryCacheAsync();
             cachedData = new DataCached(binaryCache.Result);
-            streamItem = new PublishEntity<DataCached>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataCached>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(Wallet.CliOptions.ChainName, streamItem);
@@ -528,7 +529,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             jsonData = new DataJson(new { description = "Some Text Stuff".ToHex() });
-            streamItem = new PublishEntity<DataJson>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataJson>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(Wallet.CliOptions.ChainName, streamItem);
@@ -556,7 +557,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             textData = new DataText("Some_plain_text_for_the_DataText");
-            streamItem = new PublishEntity<DataText>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataText>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeys(Wallet.CliOptions.ChainName, streamItem);
@@ -585,7 +586,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(publish);
 
             // Stage - create a new PublishEntity instance
-            streamItem = new PublishEntity("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -615,7 +616,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a new BinaryCache and then create a new PublishEntity instance
             binaryCache = await Utility.CreateBinaryCacheAsync();
             cachedData = new DataCached(binaryCache.Result);
-            streamItem = new PublishEntity<DataCached>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataCached>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -643,7 +644,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             jsonData = new DataJson(new { description = "Some Text Stuff".ToHex() });
-            streamItem = new PublishEntity<DataJson>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataJson>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -671,7 +672,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             textData = new DataText("Some_plain_text_for_the_DataText");
-            streamItem = new PublishEntity<DataText>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataText>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -700,7 +701,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(publish);
 
             // Stage - create a new PublishEntity instance
-            streamItem = new PublishEntity("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, "Some StreamItem Data".ToHex(), StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainName, Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -730,7 +731,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a new BinaryCache and then create a new PublishEntity instance
             binaryCache = await Utility.CreateBinaryCacheAsync();
             cachedData = new DataCached(binaryCache.Result);
-            streamItem = new PublishEntity<DataCached>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataCached>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, cachedData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainName, Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -758,7 +759,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             jsonData = new DataJson(new { description = "Some Text Stuff".ToHex() });
-            streamItem = new PublishEntity<DataJson>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataJson>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, jsonData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainName, Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -786,7 +787,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Stage - create a new PublishEntity instance
             textData = new DataText("Some_plain_text_for_the_DataText");
-            streamItem = new PublishEntity<DataText>("root", new[] { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
+            streamItem = new PublishEntity<DataText>("root", new List<string> { PublishEntity.GetUUID(), PublishEntity.GetUUID() }, textData, StreamRestrictTypes.OffChain);
 
             // Act - attempt to Publish a new stream item using the inferred blockchain name
             publish = await Wallet.PublishStreamItemKeysFrom(Wallet.CliOptions.ChainName, Wallet.CliOptions.ChainAdminAddress, streamItem);
@@ -813,72 +814,72 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a single instance of each available Data object type
             var dataHexEntityKey = new PublishMultiItemKeyEntity
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var dataHexEntityKeys = new PublishMultiItemKeysEntity
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKey = new PublishMultiItemKeyEntity<DataCached>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKeys = new PublishMultiItemKeysEntity<DataCached>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             var dataJsonEntityKey = new PublishMultiItemKeyEntity<DataJson>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataJsonEntityKeys = new PublishMultiItemKeysEntity<DataJson>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataTextEntityKey = new PublishMultiItemKeyEntity<DataText>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             var dataTextEntityKeys = new PublishMultiItemKeysEntity<DataText>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             // Stage - Append each data object to an array and assign it to the multi variable
-            multi.Items = (new object[]
+            multi.Items = (new List<object>
             {
                 dataHexEntityKey,
                 dataHexEntityKeys,
@@ -915,72 +916,72 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a single instance of each available Data object type
             var dataHexEntityKey = new PublishMultiItemKeyEntity
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var dataHexEntityKeys = new PublishMultiItemKeysEntity
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKey = new PublishMultiItemKeyEntity<DataCached>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKeys = new PublishMultiItemKeysEntity<DataCached>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             var dataJsonEntityKey = new PublishMultiItemKeyEntity<DataJson>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataJsonEntityKeys = new PublishMultiItemKeysEntity<DataJson>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataTextEntityKey = new PublishMultiItemKeyEntity<DataText>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             var dataTextEntityKeys = new PublishMultiItemKeysEntity<DataText>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             // Stage - Append each data object to an array and assign it to the multi variable
-            multi.Items = (new object[]
+            multi.Items = (new List<object>
             {
                 dataHexEntityKey,
                 dataHexEntityKeys,
@@ -1017,72 +1018,72 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a single instance of each available Data object type
             var dataHexEntityKey = new PublishMultiItemKeyEntity
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var dataHexEntityKeys = new PublishMultiItemKeysEntity
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKey = new PublishMultiItemKeyEntity<DataCached>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKeys = new PublishMultiItemKeysEntity<DataCached>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             var dataJsonEntityKey = new PublishMultiItemKeyEntity<DataJson>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataJsonEntityKeys = new PublishMultiItemKeysEntity<DataJson>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataTextEntityKey = new PublishMultiItemKeyEntity<DataText>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             var dataTextEntityKeys = new PublishMultiItemKeysEntity<DataText>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             // Stage - Append each data object to an array and assign it to the multi variable
-            multi.Items = (new object[]
+            multi.Items = (new List<object>
             {
                 dataHexEntityKey,
                 dataHexEntityKeys,
@@ -1119,72 +1120,72 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Create a single instance of each available Data object type
             var dataHexEntityKey = new PublishMultiItemKeyEntity
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var dataHexEntityKeys = new PublishMultiItemKeysEntity
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                DataHex = "Some data string converted to Hex".ToHex()
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = "Some data string converted to Hex".ToHex()
             };
 
             var cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKey = new PublishMultiItemKeyEntity<DataCached>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             cache = await Utility.CreateBinaryCacheAsync();
             var dataCachedEntityKeys = new PublishMultiItemKeysEntity<DataCached>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataCached(cache.Result)
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataCached(cache.Result)
             };
 
             var dataJsonEntityKey = new PublishMultiItemKeyEntity<DataJson>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataJsonEntityKeys = new PublishMultiItemKeysEntity<DataJson>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataJson(new { description = "Some description text in Hex".ToHex() })
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataJson(new { description = "Some description text in Hex".ToHex() })
             };
 
             var dataTextEntityKey = new PublishMultiItemKeyEntity<DataText>
             {
-                For = "root",
-                Key = ChainEntity.GetUUID(),
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                key = ChainEntity.GetUUID(),
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             var dataTextEntityKeys = new PublishMultiItemKeysEntity<DataText>
             {
-                For = "root",
-                Keys = new[] { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
-                Options = StreamRestrictTypes.OffChain,
-                Data = new DataText("Some_plain_text_for_the_DataText")
+                @for = "root",
+                keys = new List<string> { ChainEntity.GetUUID(), ChainEntity.GetUUID() },
+                options = StreamRestrictTypes.OffChain,
+                data = new DataText("Some_plain_text_for_the_DataText")
             };
 
             // Stage - Append each data object to an array and assign it to the multi variable
-            multi.Items = (new object[]
+            multi.Items = (new List<object>
             {
                     dataHexEntityKey,
                     dataHexEntityKeys,

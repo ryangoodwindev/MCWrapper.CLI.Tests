@@ -74,10 +74,10 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             Assert.IsEmpty(listUnspent.Error);
             Assert.IsNotNull(listUnspent.Result);
-            Assert.IsInstanceOf<CliResponse<ListUnspentResult[]>>(listUnspent);
+            Assert.IsInstanceOf<CliResponse<IList<ListUnspentResult>>>(listUnspent);
 
-            var unspentAsset_0 = listUnspent.Result.SingleOrDefault(s => s.Assets.Any(a => a.Name == assetModel_0.Name));
-            var unspentAsset_1 = listUnspent.Result.SingleOrDefault(s => s.Assets.Any(a => a.Name == assetModel_1.Name));
+            var unspentAsset_0 = listUnspent.Result.SingleOrDefault(s => s.Assets.Any(a => a.Name == assetModel_0.name));
+            var unspentAsset_1 = listUnspent.Result.SingleOrDefault(s => s.Assets.Any(a => a.Name == assetModel_1.name));
 
             var createRaw = await Raw.CreateRawTransactionAsync(
                 blockchainName: Raw.CliOptions.ChainName,
@@ -99,15 +99,15 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
                     {
                         newAddress_0.Result, new Dictionary<string, int>
                         {
-                            { assetModel_0.Name, 1 },
-                            { assetModel_1.Name, 2 }
+                            { assetModel_0.name, 1 },
+                            { assetModel_1.name, 2 }
                         }
                     }
                 }, null, null);
 
             Assert.IsEmpty(createRaw.Error);
             Assert.IsNotNull(createRaw.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(createRaw);
+            Assert.IsInstanceOf<CliResponse>(createRaw);
 
             var decode = await Raw.DecodeRawTransactionAsync(Raw.CliOptions.ChainName, $"{createRaw.Result}");
 

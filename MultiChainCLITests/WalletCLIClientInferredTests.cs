@@ -49,7 +49,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Stage - Issue a new asset to the blockchain node 
             var asset = await Wallet.IssueAsync(
                 toAddress: Options.ChainAdminAddress,
-                assetname: new AssetEntity().Name,
+                assetname: new AssetEntity().name,
                 quantity: 100,
                 smallestUnit: 1, default, default);
 
@@ -108,7 +108,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(disable.Error);
             Assert.IsNotNull(disable.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(disable);
+            Assert.IsInstanceOf<CliResponse<string>>(disable);
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("BackupWallet test ignored since it halts the blockchain network")]
@@ -152,7 +152,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<string>>>(actual);
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(complete.Error);
             Assert.IsNotNull(complete.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(complete);
+            Assert.IsInstanceOf<CliResponse<string>>(complete);
         }
 
         [Test]
@@ -242,7 +242,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(disable.Error);
             Assert.IsNotNull(disable.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(disable);
+            Assert.IsInstanceOf<CliResponse<string>>(disable);
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test]
@@ -302,7 +302,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(disable.Error);
             Assert.IsNotNull(disable.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(disable);
+            Assert.IsInstanceOf<CliResponse<string>>(disable);
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(disable.Error);
             Assert.IsNotNull(disable.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(disable);
+            Assert.IsInstanceOf<CliResponse<string>>(disable);
         }
 
         [Test]
@@ -342,7 +342,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("Dumping the wallet seems to slow down the network. Test is passing and ignored.")]
@@ -402,7 +402,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<GetAddressBalancesResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<GetAddressBalancesResult>>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need accounts, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -426,14 +426,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<GetAddressesResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<GetAddressesResult>>>(actual);
         }
 
         [Test]
         public async Task GetAddressTransactionTestAsync()
         {
             // Stage
-            var transaction = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, 1, 0.1m, default);
+            var transaction = await Wallet.IssueAsync(Node, new AssetEntity().name, 100, 1, 0.1m, default);
 
             // Act
             var actual = await Wallet.GetAddressTransactionAsync(Node, transaction.Result, true);
@@ -460,7 +460,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetAssetTransactionTestAsync()
         {
             // Stage
-            var asset = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallestUnit: 1, default, default);
+            var asset = await Wallet.IssueAsync(Node, new AssetEntity().name, 100, smallestUnit: 1, default, default);
 
             // Stage
             await Wallet.SubscribeAsync(entity_identifiers: asset.Result, false);
@@ -495,7 +495,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test]
@@ -519,7 +519,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need accounts, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -581,7 +581,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test]
@@ -593,7 +593,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test]
@@ -605,14 +605,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<GetTotalBalancesResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<GetTotalBalancesResult>>>(actual);
         }
 
         [Test]
         public async Task GetTransactionTestAsync()
         {
             // Stage
-            var txid = await Wallet.IssueFromAsync(Node, Node, new AssetEntity().Name, 1000, 0.1, default, default);
+            var txid = await Wallet.IssueFromAsync(Node, Node, new AssetEntity().name, 1000, 0.1, default, default);
 
             // Assert
             Assert.IsEmpty(txid.Error);
@@ -643,7 +643,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -655,7 +655,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<double>>(actual);
         }
 
         [Test]
@@ -852,7 +852,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(act_1.Error);
             Assert.IsNotNull(act_1.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(act_1);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
 
             // Act
             var act_2 = await Wallet.IssueMoreFromAsync(Node, Node, issue.Result.ToString(), 100, 0, new { text = "Text for the chain".ToHex() });
@@ -860,7 +860,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(act_2.Error);
             Assert.IsNotNull(act_2.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(act_2);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
         }
 
         [Test]
@@ -880,7 +880,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(act_1.Error);
             Assert.IsNotNull(act_1.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(act_1);
+            Assert.IsInstanceOf<CliResponse<string>>(act_1);
 
             // Act
             var act_2 = await Wallet.IssueMoreAsync(Node, issue.Result.ToString(), 100, 0, new { text = "Text for the chain".ToHex() });
@@ -888,7 +888,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(act_2.Error);
             Assert.IsNotNull(act_2.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(act_2);
+            Assert.IsInstanceOf<CliResponse<string>>(act_2);
         }
 
         [Test]
@@ -959,8 +959,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Assert
             Assert.IsEmpty(actual.Error);
-            Assert.IsNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsNotNull(actual.Result);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need listaccounts, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -984,7 +984,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListAddressesResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListAddressesResult>>>(actual);
         }
 
         [Test]
@@ -996,7 +996,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<object>>>(actual);
         }
 
         [Test]
@@ -1008,14 +1008,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListAddressTransactionsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListAddressTransactionsResult>>>(actual);
         }
 
         [Test]
         public async Task ListAssetTransactionsTestAsync()
         {
             // Stage
-            var issue = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallestUnit: 1, default, default);
+            var issue = await Wallet.IssueAsync(Node, new AssetEntity().name, 100, smallestUnit: 1, default, default);
 
             // Stage
             await Wallet.SubscribeAsync(entity_identifiers: issue.Result, false);
@@ -1026,7 +1026,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListAssetTransactionsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListAssetTransactionsResult>>>(actual);
         }
 
         [Test]
@@ -1038,7 +1038,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<Transaction>>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need listaccounts, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -1077,7 +1077,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test]
@@ -1089,7 +1089,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<object>>>(actual);
         }
 
         [Test]
@@ -1101,7 +1101,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamItemsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamItemsResult>>>(actual);
         }
 
         [Test]
@@ -1113,7 +1113,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamKeyItemsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamKeyItemsResult>>>(actual);
         }
 
         [Test]
@@ -1125,7 +1125,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamKeysResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamKeysResult>>>(actual);
         }
 
         [Test]
@@ -1137,7 +1137,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamPublisherItemsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamPublisherItemsResult>>>(actual);
         }
 
         [Test]
@@ -1149,7 +1149,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamPublishersResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamPublishersResult>>>(actual);
         }
 
         [Test]
@@ -1161,7 +1161,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<object>>>(actual);
         }
 
         [Test]
@@ -1176,7 +1176,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<object>>>(actual);
         }
 
         [Test, Ignore("Not supported with scalable wallet - if you need listtransactions, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -1188,7 +1188,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListTransactionsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListTransactionsResult>>>(actual);
         }
 
         [Test]
@@ -1200,7 +1200,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListUnspentResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListUnspentResult>>>(actual);
         }
 
         [Test]
@@ -1212,7 +1212,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListWalletTransactionsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListWalletTransactionsResult>>>(actual);
         }
 
         [Test]
@@ -1227,12 +1227,12 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<PrepareLockUnspentResult>>(unspent);
 
             // Act
-            var actual = await Wallet.LockUnspentAsync(false, new Transaction[] { new Transaction { Txid = unspent.Result.Txid, Vout = unspent.Result.Vout } });
+            var actual = await Wallet.LockUnspentAsync(false, new Transaction[] { new Transaction { txid = unspent.Result.Txid, vout = unspent.Result.Vout } });
 
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<bool>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need move, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -1356,7 +1356,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -1374,7 +1374,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -1393,7 +1393,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task SendAssetTestAsync()
         {
             // Stage
-            var asset = await Wallet.IssueAsync(Node, new AssetEntity().Name, 100, smallestUnit: 1, default, default);
+            var asset = await Wallet.IssueAsync(Node, new AssetEntity().name, 100, smallestUnit: 1, default, default);
 
             // Act
             var actual = await Wallet.SendAssetAsync(Node, asset.Result, 1);
@@ -1401,7 +1401,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -1416,7 +1416,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -1428,7 +1428,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need sendfrom, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -1440,7 +1440,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need sendmany, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -1452,7 +1452,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -1464,7 +1464,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test]
@@ -1476,7 +1476,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<string>>(actual);
         }
 
         [Test, Ignore("Accounts are not supported with scalable wallet - if you need move, run multichaind -walletdbversion=1 -rescan, but the wallet will perform worse")]
@@ -1500,7 +1500,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsInstanceOf<CliResponse<bool>>(actual);
         }
 
         [Test]
@@ -1523,8 +1523,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Assert
             Assert.IsEmpty(actual.Error);
-            Assert.IsNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsNotNull(actual.Result);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test]
@@ -1562,8 +1562,8 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Assert
             Assert.IsEmpty(actual.Error);
-            Assert.IsNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<object>>(actual);
+            Assert.IsNotNull(actual.Result);
+            Assert.IsInstanceOf<CliResponse>(actual);
         }
 
         [Test, Ignore("Wallet related tests are ignored while general tests are running")]

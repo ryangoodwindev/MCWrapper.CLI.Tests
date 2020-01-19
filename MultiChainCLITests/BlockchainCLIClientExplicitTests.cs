@@ -31,7 +31,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task GetAssetInfoAsyncTest()
         {
             // Stage - issue a new asset to the blockchain node
-            var asset = await Wallet.IssueAsync(Blockchain.CliOptions.ChainName, Blockchain.CliOptions.ChainAdminAddress, new AssetEntity().Name, 10, 0.1, default, default);
+            var asset = await Wallet.IssueAsync(Blockchain.CliOptions.ChainName, Blockchain.CliOptions.ChainAdminAddress, new AssetEntity().name, 10, 0.1, default, default);
 
             // Assert
             Assert.IsEmpty(asset.Error);
@@ -241,7 +241,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             var asset = await Wallet.IssueAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 toAddress: Blockchain.CliOptions.ChainAdminAddress,
-                assetName: AssetEntity.GetUUID(),
+                assetName: new AssetEntity().name,
                 quantity: 1,
                 smallestUnit: 0.1, default, default);
 
@@ -290,7 +290,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
         public async Task ListAssetsAsyncTest()
         {
             // Act - Information about a one or many assets
-            CliResponse<ListAssetsResult[]> actual = await Blockchain.ListAssetsAsync(
+            var actual = await Blockchain.ListAssetsAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 asset_identifiers: "*",
                 verbose: true,
@@ -300,14 +300,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListAssetsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListAssetsResult>>>(actual);
         }
 
         [Test]
         public async Task ListBlocksAsyncTest()
         {
             // Act - Return information about one or many blocks
-            CliResponse<ListBlocksResult[]> actual = await Blockchain.ListBlocksAsync(
+            var actual = await Blockchain.ListBlocksAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 block_set_identifier: "18",
                 verbose: true);
@@ -315,15 +315,15 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.Greater(actual.Result.Length, 0);
-            Assert.IsInstanceOf<CliResponse<ListBlocksResult[]>>(actual);
+            Assert.Greater(actual.Result.Count, 0);
+            Assert.IsInstanceOf<CliResponse<IList<ListBlocksResult>>>(actual);
         }
 
         [Test]
         public async Task ListPermissionsAsyncTest()
         {
             // Act - List information about one or many permissions pertaining to one or many addresses
-            CliResponse<ListPermissionsResult[]> actual = await Blockchain.ListPermissionsAsync(
+            var actual = await Blockchain.ListPermissionsAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 permissions: $"{Permission.Send},{Permission.Receive}",
                 addresses: Blockchain.CliOptions.ChainAdminAddress,
@@ -332,14 +332,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListPermissionsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListPermissionsResult>>>(actual);
         }
 
         [Test]
         public async Task ListStreamFiltersAsyncTest()
         {
             // Act - Ask for a list of stream filters
-            CliResponse<ListStreamFiltersResult[]> actual = await Blockchain.ListStreamFiltersAsync(
+            var actual = await Blockchain.ListStreamFiltersAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 filter_identifers: "*",
                 verbose: true);
@@ -347,14 +347,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamFiltersResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamFiltersResult>>>(actual);
         }
 
         [Test]
         public async Task ListStreamsAsyncTest()
         {
             // Act - Ask for a list of streams
-            CliResponse<ListStreamsResult[]> actual = await Blockchain.ListStreamsAsync(
+            var actual = await Blockchain.ListStreamsAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 stream_identifiers: "*",
                 verbose: true,
@@ -364,14 +364,14 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListStreamsResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListStreamsResult>>>(actual);
         }
 
         [Test]
         public async Task ListTxFiltersAsyncTest()
         {
             // Act - List of transaction filters
-            CliResponse<ListTxFiltersResult[]> actual = await Blockchain.ListTxFiltersAsync(
+            var actual = await Blockchain.ListTxFiltersAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 filter_identifiers: "*",
                 verbose: true);
@@ -379,21 +379,21 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListTxFiltersResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListTxFiltersResult>>>(actual);
         }
 
         [Test]
         public async Task ListUpgradesAsyncTest()
         {
             // Act - List of upgrades
-            CliResponse<ListUpgradesResult[]> actual = await Blockchain.ListUpgradesAsync(
+            var actual = await Blockchain.ListUpgradesAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 upgrade_identifier: "*");
 
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<ListUpgradesResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<ListUpgradesResult>>>(actual);
         }
 
         [Test]
@@ -413,7 +413,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             Assert.IsInstanceOf<CliResponse<string>>(streamFilter);
 
             // Act - Execute stream filter
-            CliResponse<RunStreamFilterResult> actual = await Blockchain.RunStreamFilterAsync(
+            var actual = await Blockchain.RunStreamFilterAsync(
                 blockchainName: Blockchain.CliOptions.ChainName,
                 filter_identifier: streamFilter.Result);
 

@@ -5,7 +5,10 @@ using MCWrapper.Data.Models.Utility;
 using MCWrapper.Ledger.Entities;
 using MCWrapper.Ledger.Entities.Extensions;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using static Newtonsoft.Json.JsonConvert;
 
 namespace MCWrapper.CLI.Tests.MultiChainCLITests
 {
@@ -41,7 +44,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Act - Append an object that is serialized to JSON and then converted to a hex string representation
             // returns byte size int
-            var append = await Utility.AppendBinaryCacheAsync(cache.Result, new AssetEntity().ObjectToHex());
+            var append = await Utility.AppendBinaryCacheAsync(cache.Result, SerializeObject(new AssetEntity()).ToHex());
 
             // Assert
             Assert.IsEmpty(append.Error);
@@ -63,7 +66,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
 
             // Assert
             Assert.IsEmpty(keyPairs.Error);
-            Assert.IsInstanceOf<CliResponse<CreateKeyPairsResult[]>>(keyPairs);
+            Assert.IsInstanceOf<CliResponse<IList<CreateKeyPairsResult>>>(keyPairs);
         }
 
         [Test]

@@ -4,6 +4,7 @@ using MCWrapper.CLI.Tests.ServiceHelpers;
 using MCWrapper.Data.Models.Network;
 using MCWrapper.Ledger.Entities.Constants;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MCWrapper.CLI.Tests.MultiChainCLITests
@@ -118,7 +119,7 @@ namespace MCWrapper.CLI.Tests.MultiChainCLITests
             // Assert
             Assert.IsEmpty(actual.Error);
             Assert.IsNotNull(actual.Result);
-            Assert.IsInstanceOf<CliResponse<GetPeerInfoResult[]>>(actual);
+            Assert.IsInstanceOf<CliResponse<IList<GetPeerInfoResult>>>(actual);
         }
 
         [Test]
